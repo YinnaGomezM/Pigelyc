@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 //const API_URL = 'http://localhost:3001/api';
 //const API_URL = 'http://172.27.20.185:3001/api';
-const API_URL = import.meta.env.PROD ? '' : 'http://localhost:3001';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 export default function DocenteGamificacion() {
   const [puntosPorMundo, setPuntosPorMundo] = useState(100);

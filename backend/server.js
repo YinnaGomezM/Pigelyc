@@ -8,10 +8,6 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middlewares
-app.use(cors());
-app.use(express.json());
-
 // Configuración de la base de datos
 const pool = mysql.createPool({
     host: process.env.DB_HOST || 'localhost',
@@ -22,6 +18,18 @@ const pool = mysql.createPool({
     connectionLimit: 10,
     queueLimit: 0
 });
+
+// CORS - configurado una sola vez
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || '*',
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+
+// Middlewares
+app.use(express.json());
 
 const algebraController = require('./algebraController');
 
@@ -577,19 +585,6 @@ app.get('/api/test', (req, res) => {
 });
 
 module.exports = { pool };
-
-// Al final del archivo server.js, antes de app.listen()
-const path = require('path');
-
-if (process.env.NODE_ENV === 'production') {
-  // Servir archivos estáticos del frontend
-  app.use(express.static(path.join(__dirname, '../pygelycgame/dist')));
-  
-  // Manejar rutas de React
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../pygelycgame/dist/index.html'));
-  });
-}
 
 const HOST = '0.0.0.0'; // Escucha en todas las interfaces de red
 
