@@ -32,7 +32,7 @@ export default function DocenteDashboard() {
 
   const fetchEstudiantes = async () => {
     try {
-      const response = await fetch(`${API_URL}/estadisticas/estudiantes`, {
+      const response = await fetch(`${API_URL}/api/estadisticas/estudiantes`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

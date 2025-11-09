@@ -270,7 +270,7 @@ export default function Game3() {
     });
     
     try {
-      const response = await fetch(`${API_URL}/intentos`, {
+      const response = await fetch(`${API_URL}/api/intentos`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -297,7 +297,7 @@ export default function Game3() {
 
   const requestHint = async () => {
     try {
-      const response = await fetch(`${API_URL}/pistas`, {
+      const response = await fetch(`${API_URL}/api/pistas`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

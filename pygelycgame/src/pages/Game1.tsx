@@ -100,7 +100,7 @@ export default function Game1() {
     const timeSpent = Math.floor((Date.now() - startTime) / 1000);
 
     try {
-      await fetch(`${API_URL}/intentos`, {
+      await fetch(`${API_URL}/api/intentos`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -131,7 +131,7 @@ export default function Game1() {
 
   const requestHint = async () => {
     try {
-      const response = await fetch(`${API_URL}/pistas`, {
+      const response = await fetch(`${API_URL}/api/pistas`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -162,7 +162,7 @@ export default function Game1() {
     const timeSpent = Math.floor((Date.now() - startTime) / 1000);
 
     try {
-      await fetch(`${API_URL}/intentos`, {
+      await fetch(`${API_URL}/api/intentos`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

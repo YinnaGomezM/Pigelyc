@@ -48,7 +48,7 @@ export default function Mundos() {
   const fetchMundos = async () => {
     try {
       console.log('📡 Cargando mundos...');
-      const response = await fetch(`${API_URL}/mundos`, {
+      const response = await fetch(`${API_URL}/api/mundos`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ export default function Mundos() {
 
   const fetchGamificacion = async () => {
     try {
-      const response = await fetch(`${API_URL}/gamificacion`, {
+      const response = await fetch(`${API_URL}/api/gamificacion`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -97,7 +97,7 @@ export default function Mundos() {
     if (mundo.progreso.estado === 'no_iniciado') {
       try {
         console.log('🎮 Iniciando mundo:', mundo.id);
-        await fetch(`${API_URL}/progreso/iniciar`, {
+        await fetch(`${API_URL}/api/progreso/iniciar`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
