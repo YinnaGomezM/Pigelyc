@@ -578,6 +578,19 @@ app.get('/api/test', (req, res) => {
 
 module.exports = { pool };
 
+// Al final del archivo server.js, antes de app.listen()
+const path = require('path');
+
+if (process.env.NODE_ENV === 'production') {
+  // Servir archivos estáticos del frontend
+  app.use(express.static(path.join(__dirname, '../pygelycgame/dist')));
+  
+  // Manejar rutas de React
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../pygelycgame/dist/index.html'));
+  });
+}
+
 const HOST = '0.0.0.0'; // Escucha en todas las interfaces de red
 
 app.listen(PORT, HOST, () => {

@@ -13,8 +13,9 @@ interface Piedra {
   valorFx: number;
 }
 
-const API_URL = 'http://localhost:3001/api';
+//const API_URL = 'http://localhost:3001/api';
 //const API_URL = 'http://172.27.20.185:3001/api';
+const API_URL = import.meta.env.PROD ? '' : 'http://localhost:3001';
 
 export default function Game1() {
   const { token, user } = useAuth();

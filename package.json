@@ -1,0 +1,13 @@
+{
+    "name": "pygelyc",
+    "version": "1.0.0",
+    "scripts": {
+        "install-backend": "cd backend && npm install",
+        "install-frontend": "cd pygelycgame && npm install",
+        "build-frontend": "cd pygelycgame && npm run build",
+        "start": "cd backend && node server.js"
+    },
+    "engines": {
+        "node": ">=18.0.0"
+    }
+}

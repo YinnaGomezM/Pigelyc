@@ -14,8 +14,9 @@ interface Mundo {
   };
 }
 
-const API_URL = 'http://localhost:3001/api';
+//const API_URL = 'http://localhost:3001/api';
 //const API_URL = 'http://172.27.20.185:3001/api';
+const API_URL = import.meta.env.PROD ? '' : 'http://localhost:3001';
 
 export default function Mundos() {
   const [mundos, setMundos] = useState<Mundo[]>([]);

@@ -115,6 +115,10 @@ CREATE TABLE IF NOT EXISTS intentos_algebra (
     INDEX idx_intentos_estudiante (id_estudiante, tipo_ejercicio)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+ALTER TABLE intentos
+ADD COLUMN limite_izquierdo FLOAT NULL,
+ADD COLUMN limite_derecho FLOAT NULL;
+
 -- Insertar datos iniciales
 INSERT INTO mundos (nombre, descripcion, orden, estado) VALUES
 ('Mundo 1: Definición de Límite', 'Valle con río serpenteante. Mecánica: Plataformas móviles para aproximación sucesiva al valor límite.', 1, 'activo'),
@@ -134,6 +138,39 @@ INSERT INTO desafios (id_mundo, nombre, descripcion, tipo, parametros, respuesta
 '{"valores_x": [1.5, 1.8, 1.9, 2.0, 2.1], "funcion": "x^2"}', 4.0),
 (1, 'Desafío de Precisión', 'Alcanzar el punto más cercano a a dentro del rango de tolerancia', 'precision',
 '{"punto_objetivo": 3, "tolerancia": 0.05, "funcion": "2x+1"}', 7.0);
+
+-- Insertar desafío del Mundo 2
+INSERT INTO desafios (id_mundo, nombre, descripcion, tipo, parametros, respuesta_correcta) VALUES
+(2, 'El Caso Disperso', 'Determinar si existe el límite en a=0 para f(x) = |x|/x.', 'limites_laterales', 
+'{"punto_objetivo": 0, "funcion": "|x|/x", "limite_izquierdo_esperado": -1, "limite_derecho_esperado": 1}', 0.0); -- 0.0 significa que el límite NO existe
+
+INSERT INTO desafios (
+    id_mundo, 
+    nombre, 
+    descripcion,
+    tipo, 
+    parametros, 
+    respuesta_correcta
+) VALUES (
+    3,
+    'Propiedades Algebraicas',
+    'Combina funciones usando operaciones algebraicas (suma, resta, producto, división)',
+    'propiedades_limites',
+    '{"tolerancia": 0.01, "niveles": 3, "punto_inicial": 2}',
+    NULL  -- NULL porque la respuesta se calcula dinámicamente en el juego
+);
+
+INSERT INTO usuarios (nombre, email, password, tipo) 
+VALUES (
+    'Profesor 1', 
+    'docente@pygely.com', 
+    '$2b$10$rN4.3ZxVzYBPz5XQEK6RVeF7dxWdAO5N5TLZ/YXQ4vP5zXQEK6RVe', 
+    'docente'
+);
+
+UPDATE usuarios
+  SET password = '$2b$10$Riw9ake0DR9I7iZXRBtUy.ukJhL6MnK2HIULMEJl6ITJ2jQU4DZaG'
+  WHERE email = 'docente@pygely.com';
 
 -- Crear índices para mejorar el rendimiento
 CREATE INDEX idx_progreso_estudiante ON progreso_estudiante(id_estudiante, id_mundo);
