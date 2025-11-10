@@ -16,6 +16,8 @@ export default function EjerciciosFactorizacion() {
     const [resultado, setResultado] = useState<any>(null);
     const [loading, setLoading] = useState(false);
     const [ejerciciosCompletados, setEjerciciosCompletados] = useState(0);
+    
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
     useEffect(() => {
         cargarEjercicio();
@@ -33,7 +35,7 @@ export default function EjerciciosFactorizacion() {
         setResultado(null);
 
         try {
-            const response = await fetch(`http://localhost:3001/api/algebra/ejercicio?tipo=factorizacion&nivel=${nivel}`);
+            const response = await fetch(`${API_URL}/api/algebra/ejercicio?tipo=factorizacion&nivel=${nivel}`);
             const data = await response.json();
             setEjercicioActual(data);
         } catch (error) {
@@ -55,7 +57,7 @@ export default function EjerciciosFactorizacion() {
             const headers: any = { 'Content-Type': 'application/json' };
             if (token) headers['Authorization'] = `Bearer ${token}`;
 
-            const response = await fetch('http://localhost:3001/api/algebra/validar', {
+            const response = await fetch(`${API_URL}/api/algebra/validar`, {
                 method: 'POST',
                 headers,
                 body: JSON.stringify({
