@@ -1,6 +1,5 @@
--- Base de datos para el juego de límites
-CREATE DATABASE IF NOT EXISTS pygelyc_game;
-USE pygelyc_game;
+-- CREATE DATABASE IF NOT EXISTS pygelyc_game;
+-- USE pygelyc_game;
 
 -- Tabla de usuarios (estudiantes y docentes)
 CREATE TABLE usuarios (
@@ -28,7 +27,7 @@ CREATE TABLE desafios (
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT,
     tipo VARCHAR(50),
-    parametros JSON,
+    parametros TEXT,
     respuesta_correcta FLOAT,
     FOREIGN KEY (id_mundo) REFERENCES mundos(id) ON DELETE CASCADE
 );
