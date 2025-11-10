@@ -13,10 +13,11 @@ export default function EjerciciosFactorizacion() {
     const [nivel, setNivel] = useState('basico');
     const [puntos, setPuntos] = useState(0);
     const [mostrarPistas, setMostrarPistas] = useState(false);
+    const [mostrarRespuesta, setMostrarRespuesta] = useState(false);
     const [resultado, setResultado] = useState<any>(null);
     const [loading, setLoading] = useState(false);
     const [ejerciciosCompletados, setEjerciciosCompletados] = useState(0);
-    
+
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
     useEffect(() => {
@@ -32,6 +33,7 @@ export default function EjerciciosFactorizacion() {
         setLoading(true);
         setRespuestaUsuario('');
         setMostrarPistas(false);
+        setMostrarRespuesta(false);
         setResultado(null);
 
         try {
@@ -83,8 +85,6 @@ export default function EjerciciosFactorizacion() {
                 }
 
                 setTimeout(() => cargarEjercicio(), 2000);
-            } else {
-                setMostrarPistas(true);
             }
         } catch (error) {
             console.error('Error al validar respuesta:', error);
@@ -111,10 +111,13 @@ export default function EjerciciosFactorizacion() {
                             value={nivel}
                             onChange={(e) => setNivel(e.target.value)}
                             className="bg-white/10 text-white border border-white/30 rounded-lg px-4 py-2"
+                            style={{
+                                colorScheme: 'dark'
+                            }}
                         >
-                            <option value="basico">Básico</option>
-                            <option value="intermedio">Intermedio</option>
-                            <option value="avanzado">Avanzado</option>
+                            <option value="basico" className="bg-slate-800 text-white">Básico</option>
+                            <option value="intermedio" className="bg-slate-800 text-white">Intermedio</option>
+                            <option value="avanzado" className="bg-slate-800 text-white">Avanzado</option>
                         </select>
                     </div>
                 </div>
@@ -146,7 +149,14 @@ export default function EjerciciosFactorizacion() {
                                 onClick={() => setMostrarPistas(!mostrarPistas)}
                                 className="px-6 bg-blue-500/50 hover:bg-blue-500/70 text-white font-bold py-3 rounded-lg transition-all"
                             >
-                                💡 Pista
+                                💡 {mostrarPistas ? 'Ocultar' : 'Pistas'}
+                            </button>
+
+                            <button
+                                onClick={() => setMostrarRespuesta(!mostrarRespuesta)}
+                                className="px-6 bg-orange-500/50 hover:bg-orange-500/70 text-white font-bold py-3 rounded-lg transition-all"
+                            >
+                                👁️ {mostrarRespuesta ? 'Ocultar' : 'Ver Respuesta'}
                             </button>
                         </div>
 
@@ -163,6 +173,16 @@ export default function EjerciciosFactorizacion() {
                                 )}
                             </div>
                         )}
+
+                        {/* Mostrar respuesta directa */}
+                        {mostrarRespuesta && ejercicioActual && (
+                            <div className="mt-6 p-4 rounded-lg bg-purple-500/20 border-2 border-purple-500">
+                                <p className="text-white font-bold text-center mb-2">📝 Respuesta:</p>
+                                <p className="text-white/90 text-center text-xl">
+                                    <ExpresionAlgebraica expresion={ejercicioActual.expresion_resultado} />
+                                </p>
+                            </div>
+                        )}
                     </div>
                 )}
 
@@ -170,8 +190,8 @@ export default function EjerciciosFactorizacion() {
                     <div className="text-center text-white text-xl">Cargando ejercicio...</div>
                 )}
 
-                {/* Pistas */}
-                {mostrarPistas && resultado && !resultado.correcto && (
+                {/* Pistas - Ahora se pueden ver en cualquier momento */}
+                {mostrarPistas && ejercicioActual && (
                     <>
                         <Calcin {...({ mensaje: resultado.pasos?.[0] || "Intenta nuevamente", onClose: () => setMostrarPistas(false) } as any)} />
                         <PasoResolver pasos={resultado.pasos || []} />
